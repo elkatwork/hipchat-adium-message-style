@@ -39,7 +39,7 @@ function hipChatizeHTML(html) {
     senderNode.innerText = truncatedSender;
 
     // Colorize the message
-    if(/github|(chef\sclient)/gi.test(rawSender)) {
+    if(/github|(chef\sclient)|deploy|errbit|splunk/gi.test(rawSender)) {
       messageClass = "systemMessage";
     } else if(/You have connected/gi.test(rawMessage)) {
       newContent = document.createTextNode('Welcome!');
@@ -50,6 +50,14 @@ function hipChatizeHTML(html) {
         messageClass = "systemMessage red";
       } else {
         messageClass = "systemMessage green";
+      }
+    } else if(/nagios/gi.test(rawSender)) {
+      if(/ok/gi.test(rawMessage)) {
+        messageClass = "systemMessage green";
+      } else if(/warning/.gi.test(rawMessage)) {
+        messageClass = "systemMessage";
+      } else {
+        messageClass = "systemMessage red";
       }
     } else {
       messageClass = "";
